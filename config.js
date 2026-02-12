@@ -78,7 +78,7 @@ const CONFIG = {
     music: {
         enabled: true,                     // Music feature is enabled
         autoplay: true,                    // Try to autoplay (note: some browsers may block this)
-        musicUrl: "https://res.cloudinary.com/dncywqfpb/video/upload/v1738399057/music_qrhjvy.mp3", // Music streaming URL
+        musicUrl: "https://res.cloudinary.com/dzufsx75s/video/upload/v1770857787/sai_-_Hurim_Official_Music_Video_kdprbz.mp3", // Music streaming URL
         startText: "🎵 Дууг тоглуулах",        // Button text to start music
         stopText: "🔇 Дууг зогсоох",         // Button text to stop music
         volume: 0.5                        // Volume level (0.0 to 1.0)
