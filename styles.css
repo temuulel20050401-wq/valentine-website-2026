@@ -318,26 +318,25 @@ h2 {
 } 
 .gallery {
     text-align: center;
-    margin: 150px auto 50px auto; /* дээшээ зай нэмсэн, доошоо 50px */
+    margin: 30px auto 50px auto; /* container дотор доош байрлуулах */
     position: relative;
-    z-index: 5; /* floating hearts-оос дээгүүр */
+    z-index: 1; /* floating elements-ийн ард */
 }
 
 .slider {
     position: relative;
-    width: 400px;
-    max-width: 90%;
-    margin: 0 auto; /* center */
-    z-index: 5; /* hearts-ийн ард биш */
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    z-index: 1; /* floating hearts-оос доор */
 }
 
 .slide {
     width: 100%;
-    border-radius: 20px;
-    display: none; /* init hidden */
-    transition: opacity 0.5s ease-in-out;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    border-radius: 15px;
+    display: none;
     opacity: 0;
+    transition: opacity 0.5s ease-in-out;
 }
 
 .slide.active {
@@ -345,28 +344,9 @@ h2 {
     opacity: 1;
 }
 
-/* Slider control buttons */
 .buttons {
     text-align: center;
     margin-top: 10px;
-    z-index: 6;
     position: relative;
+    z-index: 2;
 }
-
-.buttons button {
-    padding: 10px 20px;
-    margin: 10px;
-    border-radius: 20px;
-    border: none;
-    cursor: pointer;
-    background: pink;
-    font-size: 18px;
-    transition: transform 0.3s, background 0.3s;
-}
-
-.buttons button:hover {
-    transform: scale(1.1);
-    background: #ff6b6b;
-    color: white;
-}
-
