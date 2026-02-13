@@ -31,10 +31,9 @@ function validateConfig() {
         config.animations.heartExplosionSize = 1.5;
     }
 
-    // Log warnings if any
     if (warnings.length > 0) {
         console.warn("⚠️ Configuration Warnings:");
-        warnings.forEach(warning => console.warn("- " + warning));
+        warnings.forEach(w => console.warn("- " + w));
     }
 }
 
@@ -50,45 +49,11 @@ function getDefaultColor(key) {
     return defaults[key];
 }
 
-// Set page title
-document.title = config.pageTitle;
-
-// Initialize the page content when DOM is loaded
-window.addEventListener('DOMContentLoaded', () => {
-    // Validate configuration first
-    validateConfig();
-
-    // Set texts from config
-    document.getElementById('valentineTitle').textContent = `${config.valentineName}, my love...`;
-    
-    // Set first question texts
-    document.getElementById('question1Text').textContent = config.questions.first.text;
-    document.getElementById('yesBtn1').textContent = config.questions.first.yesBtn;
-    document.getElementById('noBtn1').textContent = config.questions.first.noBtn;
-    document.getElementById('secretAnswerBtn').textContent = config.questions.first.secretAnswer;
-    
-    // Set second question texts
-    document.getElementById('question2Text').textContent = config.questions.second.text;
-    document.getElementById('startText').textContent = config.questions.second.startText;
-    document.getElementById('nextBtn').textContent = config.questions.second.nextBtn;
-    
-    // Set third question texts
-    document.getElementById('question3Text').textContent = config.questions.third.text;
-    document.getElementById('yesBtn3').textContent = config.questions.third.yesBtn;
-    document.getElementById('noBtn3').textContent = config.questions.third.noBtn;
-
-    // Create initial floating elements
-    createFloatingElements();
-
-    // Setup music player
-    setupMusicPlayer();
-});
-
-// Create floating hearts and bears
+// ------------------- Floating Elements -------------------
 function createFloatingElements() {
     const container = document.querySelector('.floating-elements');
-    
-    // Create hearts
+
+    // Hearts
     config.floatingEmojis.hearts.forEach(heart => {
         const div = document.createElement('div');
         div.className = 'heart';
@@ -97,7 +62,7 @@ function createFloatingElements() {
         container.appendChild(div);
     });
 
-    // Create bears
+    // Bears
     config.floatingEmojis.bears.forEach(bear => {
         const div = document.createElement('div');
         div.className = 'bear';
@@ -107,20 +72,19 @@ function createFloatingElements() {
     });
 }
 
-// Set random position for floating elements
 function setRandomPosition(element) {
     element.style.left = Math.random() * 100 + 'vw';
     element.style.animationDelay = Math.random() * 5 + 's';
-    element.style.animationDuration = 10 + Math.random() * 20 + 's';
+    const floatDuration = parseFloat(config.animations.floatDuration);
+    element.style.animationDuration = (floatDuration + Math.random() * 5) + 's';
 }
 
-// Function to show next question
+// ------------------- Question Navigation -------------------
 function showNextQuestion(questionNumber) {
     document.querySelectorAll('.question-section').forEach(q => q.classList.add('hidden'));
     document.getElementById(`question${questionNumber}`).classList.remove('hidden');
 }
 
-// Function to move the "No" button when clicked
 function moveButton(button) {
     const x = Math.random() * (window.innerWidth - button.offsetWidth);
     const y = Math.random() * (window.innerHeight - button.offsetHeight);
@@ -129,29 +93,29 @@ function moveButton(button) {
     button.style.top = y + 'px';
 }
 
-// Love meter functionality
+// ------------------- Love Meter -------------------
 const loveMeter = document.getElementById('loveMeter');
 const loveValue = document.getElementById('loveValue');
 const extraLove = document.getElementById('extraLove');
 
 function setInitialPosition() {
+    if (!loveMeter || !loveValue || !extraLove) return;
     loveMeter.value = 100;
     loveValue.textContent = 100;
     loveMeter.style.width = '100%';
 }
 
-loveMeter.addEventListener('input', () => {
+loveMeter?.addEventListener('input', () => {
     const value = parseInt(loveMeter.value);
     loveValue.textContent = value;
-    
+
     if (value > 100) {
         extraLove.classList.remove('hidden');
         const overflowPercentage = (value - 100) / 9900;
         const extraWidth = overflowPercentage * window.innerWidth * 0.8;
         loveMeter.style.width = `calc(100% + ${extraWidth}px)`;
         loveMeter.style.transition = 'width 0.3s';
-        
-        // Show different messages based on the value
+
         if (value >= 5000) {
             extraLove.classList.add('super-love');
             extraLove.textContent = config.loveMessages.extreme;
@@ -169,86 +133,58 @@ loveMeter.addEventListener('input', () => {
     }
 });
 
-// Initialize love meter
-window.addEventListener('DOMContentLoaded', setInitialPosition);
-window.addEventListener('load', setInitialPosition);
-
-// Celebration function
+// ------------------- Celebration -------------------
 function celebrate() {
     document.querySelectorAll('.question-section').forEach(q => q.classList.add('hidden'));
     const celebration = document.getElementById('celebration');
     celebration.classList.remove('hidden');
-    
-    // Set celebration messages
+
     document.getElementById('celebrationTitle').textContent = config.celebration.title;
     document.getElementById('celebrationMessage').textContent = config.celebration.message;
     document.getElementById('celebrationEmojis').textContent = config.celebration.emojis;
-    
-    // Create heart explosion effect
+
     createHeartExplosion();
 }
 
-// Create heart explosion animation
 function createHeartExplosion() {
+    const container = document.querySelector('.floating-elements');
     for (let i = 0; i < 50; i++) {
         const heart = document.createElement('div');
         const randomHeart = config.floatingEmojis.hearts[Math.floor(Math.random() * config.floatingEmojis.hearts.length)];
         heart.innerHTML = randomHeart;
         heart.className = 'heart';
-        document.querySelector('.floating-elements').appendChild(heart);
+        container.appendChild(heart);
         setRandomPosition(heart);
     }
 }
 
-// Music Player Setup
+// ------------------- Music Player -------------------
 function setupMusicPlayer() {
     const musicControls = document.getElementById('musicControls');
     const musicToggle = document.getElementById('musicToggle');
     const bgMusic = document.getElementById('bgMusic');
     const musicSource = document.getElementById('musicSource');
 
-    // Only show controls if music is enabled in config
     if (!config.music.enabled) {
         musicControls.style.display = 'none';
         return;
     }
 
-    // Set music source and volume
     musicSource.src = config.music.musicUrl;
-    bgMusic.volume = config.music.volume || 0.5;
+    bgMusic.volume = config.music.volume ?? 0.5;
     bgMusic.load();
 
-    // Try autoplay if enabled
+    // Autoplay
     if (config.music.autoplay) {
         const playPromise = bgMusic.play();
         if (playPromise !== undefined) {
-            playPromise.catch(error => {
+            playPromise.catch(() => {
                 console.log("Autoplay prevented by browser");
                 musicToggle.textContent = config.music.startText;
             });
         }
     }
 
-let slides = document.querySelectorAll(".slide");
-let current = 0;
-
-function showSlide(index) {
-    slides.forEach(slide => slide.classList.remove("active"));
-    slides[index].classList.add("active");
-}
-
-function nextSlide() {
-    current = (current + 1) % slides.length;
-    showSlide(current);
-}
-
-function prevSlide() {
-    current = (current - 1 + slides.length) % slides.length;
-    showSlide(current);
-}
-
-
-    // Toggle music on button click
     musicToggle.addEventListener('click', () => {
         if (bgMusic.paused) {
             bgMusic.play();
@@ -258,4 +194,60 @@ function prevSlide() {
             musicToggle.textContent = config.music.startText;
         }
     });
-} 
+}
+
+// ------------------- Slides -------------------
+function setupSlides() {
+    window.slides = document.querySelectorAll(".slide");
+    window.currentSlide = 0;
+
+    window.showSlide = function(index) {
+        slides.forEach(slide => slide.classList.remove("active"));
+        slides[index].classList.add("active");
+    }
+
+    window.nextSlide = function() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    window.prevSlide = function() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    if (slides.length > 0) showSlide(0);
+}
+
+// ------------------- Initialization -------------------
+window.addEventListener('DOMContentLoaded', () => {
+    validateConfig();
+
+    // Page title
+    document.title = config.pageTitle;
+
+    // Question texts
+    document.getElementById('valentineTitle').textContent = `${config.valentineName}, my love...`;
+    document.getElementById('question1Text').textContent = config.questions.first.text;
+    document.getElementById('yesBtn1').textContent = config.questions.first.yesBtn;
+    document.getElementById('noBtn1').textContent = config.questions.first.noBtn;
+    document.getElementById('secretAnswerBtn').textContent = config.questions.first.secretAnswer;
+    document.getElementById('question2Text').textContent = config.questions.second.text;
+    document.getElementById('startText').textContent = config.questions.second.startText;
+    document.getElementById('nextBtn').textContent = config.questions.second.nextBtn;
+    document.getElementById('question3Text').textContent = config.questions.third.text;
+    document.getElementById('yesBtn3').textContent = config.questions.third.yesBtn;
+    document.getElementById('noBtn3').textContent = config.questions.third.noBtn;
+
+    // Floating elements
+    createFloatingElements();
+
+    // Love meter
+    setInitialPosition();
+
+    // Music
+    setupMusicPlayer();
+
+    // Slides
+    setupSlides();
+});
