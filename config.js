@@ -73,9 +73,10 @@ const CONFIG = {
         heartExplosionSize: 1.5         // Size of heart explosion effect (1.2-2.0 recommended)
     },
 galleryImages: [
-   "images/photo1.jpg",
-   "images/photo2.jpg",
-   "images/photo3.jpg"
+   "images/photo1.png",
+   "images/photo2.png",
+   "images/photo3.png"
+    "images/photo4.png"
 ],
 
     // Background Music (Optional)
