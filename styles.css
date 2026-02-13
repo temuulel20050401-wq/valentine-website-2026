@@ -318,25 +318,39 @@ h2 {
 } 
 .gallery {
     text-align: center;
-    margin-top: 80px;
+    margin: 150px auto 50px auto; /* дээшээ зай нэмсэн, доошоо 50px */
+    position: relative;
+    z-index: 5; /* floating hearts-оос дээгүүр */
 }
 
 .slider {
     position: relative;
     width: 400px;
-    margin: 20px auto;
+    max-width: 90%;
+    margin: 0 auto; /* center */
+    z-index: 5; /* hearts-ийн ард биш */
 }
 
 .slide {
     width: 100%;
     border-radius: 20px;
-    display: none;
-    transition: 0.5s ease-in-out;
+    display: none; /* init hidden */
+    transition: opacity 0.5s ease-in-out;
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    opacity: 0;
 }
 
 .slide.active {
     display: block;
+    opacity: 1;
+}
+
+/* Slider control buttons */
+.buttons {
+    text-align: center;
+    margin-top: 10px;
+    z-index: 6;
+    position: relative;
 }
 
 .buttons button {
@@ -347,4 +361,12 @@ h2 {
     cursor: pointer;
     background: pink;
     font-size: 18px;
+    transition: transform 0.3s, background 0.3s;
 }
+
+.buttons button:hover {
+    transform: scale(1.1);
+    background: #ff6b6b;
+    color: white;
+}
+
