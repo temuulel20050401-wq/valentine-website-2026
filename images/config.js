@@ -87,10 +87,10 @@ const CONFIG = {
 };
     // Our Memories Gallery
 galleryImages: [
-    "images/photo1.png",
-    "images/photo2.png",
-    "images/photo3.png"
-    "images/photo4.png"
+    "photo1.png",
+    "photo2.png",
+    "photo3.png"
+    "photo4.png"
 ],
 
 // Don't modify anything below this line unless you know what you're doing
