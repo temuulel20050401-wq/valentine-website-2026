@@ -58,8 +58,8 @@ const CONFIG = {
         enabled: true,
         autoplay: true,
         musicUrl: "https://res.cloudinary.com/dzufsx75s/video/upload/v1770994631/IMG_3092_dk1e2o.mp3",
-        startText: "🎵 Дууг тоглуулах",
-        stopText: "🔇 Дууг зогсоох",
+        startText: "🎵 тоглуулах",
+        stopText: "🔇  зогсоох",
         volume: 0.5
     },
 
