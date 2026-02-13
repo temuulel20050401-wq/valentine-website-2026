@@ -238,6 +238,32 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('question3Text').textContent = config.questions.third.text;
     document.getElementById('yesBtn3').textContent = config.questions.third.yesBtn;
     document.getElementById('noBtn3').textContent = config.questions.third.noBtn;
+    window.addEventListener('DOMContentLoaded', () => {
+    setupSlides();
+});
+
+function setupSlides() {
+    window.slides = document.querySelectorAll(".slide");
+    window.currentSlide = 0;
+
+    window.showSlide = function(index) {
+        slides.forEach(slide => slide.classList.remove("active"));
+        slides[index].classList.add("active");
+    }
+
+    window.nextSlide = function() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    window.prevSlide = function() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    if (slides.length > 0) showSlide(0);
+}
+
 
     // Floating elements
     createFloatingElements();
