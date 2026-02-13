@@ -86,12 +86,12 @@ const CONFIG = {
     }
 };
     // Our Memories Gallery
-galleryImages: [
-    "valentine-website-2026/images/photo1.png",
-    "valentine-website-2026/images/photo2.png",
-    "valentine-website-2026/images/photo3.png"
-    "valentine-website-2026/images/photo4.png"
-],
+galleryImages: {
+    "images/photo1.png",
+    "images/photo2.png",
+    "images/photo3.png",
+    "images/photo4.png",
+};
 
 // Don't modify anything below this line unless you know what you're doing
 window.VALENTINE_CONFIG = CONFIG; 
