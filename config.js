@@ -72,12 +72,7 @@ const CONFIG = {
         bounceSpeed: "0.5s",            // Speed of bouncing animations (0.3-0.7s recommended)
         heartExplosionSize: 1.5         // Size of heart explosion effect (1.2-2.0 recommended)
     },
-galleryImages: [
-   "images/photo1.png",
-   "images/photo2.png",
-   "images/photo3.png"
-    "images/photo4.png"
-],
+
 
     // Background Music (Optional)
     // Add your own music URL after getting proper licenses
